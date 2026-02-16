@@ -8,5 +8,8 @@
   "directories": {
     "hashEntries": "db/entries.dat",
     "hashTemplate": "formats/hash.json"
+  },
+  "configs": {
+    "compressed": false
   }
 }
