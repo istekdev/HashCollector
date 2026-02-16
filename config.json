@@ -6,7 +6,7 @@
     "created": 1771301579
   },
   "directories": {
-    "hashEntries": "bin/entries.dat",
+    "hashEntries": "db/entries.dat",
     "hashTemplate": "formats/hash.json"
   }
 }
