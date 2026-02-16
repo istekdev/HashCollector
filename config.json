@@ -1,0 +1,12 @@
+{
+  "metadata": {
+    "version": 1,
+    "developer": "ISTEK",
+    "github": "https://github.com/istekdev/HashCollector",
+    "created": 1771301579
+  },
+  "directories": {
+    "hashEntries": "bin/entries.dat",
+    "hashTemplate": "formats/hash.json"
+  }
+}
