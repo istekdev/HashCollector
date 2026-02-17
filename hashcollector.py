@@ -32,12 +32,14 @@ def new(algo, source, hash, comment):
   hashEntry["metadata"]["timestamp"], hashEntry["entry"]["algo"], hashEntry["entry"]["source"], hashEntry["entry"]["hash"], hashEntry["comments"] = round(time.time()), algo, source, hash, comment
   if not os.path.exists(config["directories"]["hashEntries"]):
     hashEntry["metadata"]["prevHash"] = "0"*64
+    hashEntry["metadata"]["entryHash"] = sha256(sha256(tobyte(hashEntry["metadata"]["prevHash"]) + tobyte(hashEntry["metadata"]["timestamp"]) + tobyte(hashEntry["metadata"]["index"]) + tobyte(hashEntry["entry"]["algo"]) + tobyte(hashEntry["entry"]["source"]) + tobyte(hashEntry["entry"]["hash"]) + tobyte(hashEntry["comments"])).digest()).hexdigest()
     db = [hashEntry]
   else:
     with open(config["directories"]["hashEntries"], "r") as r:
       db = json.load(r)
-    hashEntry["metadata"]["prevHash"] = sha256(sha256(tobyte(db[-1]["metadata"]["prevHash"]) + tobyte(db[-1]["metadata"]["timestamp"]) + tobyte(db[-1]["metadata"]["index"]) + tobyte(db[-1]["entry"]["algo"]) + tobyte(db[-1]["entry"]["source"]) + tobyte(db[-1]["entry"]["hash"]) + tobyte(db[-1]["comments"])).digest()).hexdigest()
+    hashEntry["metadata"]["prevHash"] = db[-1]["metadata"]["entryHash"]
     hashEntry["metadata"]["index"] = len(db) + 1
+    hashEntry["metadata"]["entryHash"] = sha256(sha256(tobyte(hashEntry["metadata"]["prevHash"]) + tobyte(hashEntry["metadata"]["timestamp"]) + tobyte(hashEntry["metadata"]["index"]) + tobyte(hashEntry["entry"]["algo"]) + tobyte(hashEntry["entry"]["source"]) + tobyte(hashEntry["entry"]["hash"]) + tobyte(hashEntry["comments"])).digest()).hexdigest()
     db.append(hashEntry)
   with open(config["directories"]["hashEntries"], "w") as w:
     if config["configs"]["compressed"]:
@@ -65,7 +67,7 @@ def verify():
         return False
     else:
       for entries in range(1, len(db)):
-        if sha256(sha256(tobyte(db[entries-1]["metadata"]["prevHash"]) + tobyte(db[entries-1]["metadata"]["timestamp"]) + tobyte(db[entries-1]["metadata"]["index"]) + tobyte(db[entries-1]["entry"]["algo"]) + tobyte(db[entries-1]["entry"]["source"]) + tobyte(db[entries-1]["entry"]["hash"]) + tobyte(db[entries-1]["comments"])).digest()).hexdigest() == db[entries]["metadata"]["prevHash"]:
+        if db[entries]["metadata"]["prevHash"] == db[entries-1]["metadata"]["entryHash"]:
           pass
         else:
           return False
