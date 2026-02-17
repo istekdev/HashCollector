@@ -76,7 +76,7 @@ def verify():
 
 def menu():
   val = verify()
-  if val:
+  if val or val == None:
     pass
   else:
     message_dialog(title="Fatal Error", text=f"This Error is Due To Possible Tampering Detected In '{config["directories"]["hashEntries"]}'. Exiting in 3 Seconds.").run()
