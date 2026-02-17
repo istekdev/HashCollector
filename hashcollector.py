@@ -114,7 +114,7 @@ def menu():
         db = json.load(r)
       indexes = []
       for entries in db:
-        indexes.append((f"entries.get("metadata", {}).get("index"), Hash #{str(entries.get("metadata", {}).get("index"))}"))
+        indexes.append((entries.get("metadata", {}).get("index"), f"Hash #{str(entries.get("metadata", {}).get("index"))}"))
       indexes.append(("exit", "Exit"))
       allHashes = radiolist_dialog(title=t, text="Select Hash Index To View", values=indexes).run()
       if allHashes == "exit":
