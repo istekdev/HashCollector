@@ -150,4 +150,6 @@ def menu():
   elif moptions == 4:
     sys.exit(0)
 
+folder, file = config["directories"]["hashEntries"].split("/")
+os.makedirs(folder, exist_ok=True)
 menu()
