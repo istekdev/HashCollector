@@ -49,7 +49,7 @@ def view(index):
   with open(config["directories"]["hashEntries"], "r") as r:
     db = json.load(r)
   for entries in db:
-    if entries.get("metadata", {}).get("index") == index:
+    if entries.get("metadata", {}).get("index") == int(index):
       return f"{str(entries["metadata"]["index"])}<?>{str(entries["metadata"]["timestamp"])}<?>{entries["entry"]["hash"]}<?>{entries["entry"]["algo"]}<?>{entries["entry"]["source"]}<?>{entries["comments"]}"
 
 def verify():
