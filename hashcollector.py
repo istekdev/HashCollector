@@ -119,6 +119,7 @@ def menu():
         menu()
       else:
         index, timestamp, hash, algo, source, comment = view(allHashes).split("<?>")
+        timestamp = int(timestamp)
         message_dialog(title=t, text=f"Hash Index: {index}\nDate: {datetime.fromtimestamp(timestamp)}\n---\nHash: {hash}\nAlgorithm: {algo}\nSource: {source}\n---\nComments: {comment}").run()
         menu()
   elif moptions == 3:
