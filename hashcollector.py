@@ -1,4 +1,4 @@
-from prompt_toolkit.shortcuts import input_dialog, message_dialog, button_dialog
+from prompt_toolkit.shortcuts import input_dialog, message_dialog, button_dialog, radiolist_dialog
 import os, json, time, copy, sys
 from datetime import datetime
 from hashlib import sha256
@@ -114,9 +114,9 @@ def menu():
         db = json.load(r)
       indexes = []
       for entries in db:
-        indexes.append((f"Hash #{str(entries.get("metadata", {}).get("index"))}", entries.get("metadata", {}).get("index")))
-      indexes.append(("Exit", "exit"))
-      allHashes = button_dialog(title=t, text="Select Hash Index To View", buttons=indexes).run()
+        indexes.append((f"entries.get("metadata", {}).get("index"), Hash #{str(entries.get("metadata", {}).get("index"))}"))
+      indexes.append(("exit", "Exit"))
+      allHashes = radiolist_dialog(title=t, text="Select Hash Index To View", values=indexes).run()
       if allHashes == "exit":
         menu()
       else:
