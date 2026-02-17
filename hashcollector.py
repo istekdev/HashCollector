@@ -46,14 +46,11 @@ def new(algo, source, hash, comment):
       json.dump(db, w, indent=4)
 
 def view(index):
-  if not isinstance(index, int):
-    return None
-  else:
-    with open(config["directories"]["hashEntries"], "r") as r:
-      db = json.load(r)
-    for entries in db:
-      if entries.get("metadata", {}).get("index") == index:
-        return f"{entries["metadata"]["index"]}<?>{entries["metadata"]["timestamp"]}<?>{entries["entry"]["hash"]}<?>{entries["entry"]["algo"]}<?>{entries["entry"]["source"]}<?>{entries["comments"]}"
+  with open(config["directories"]["hashEntries"], "r") as r:
+    db = json.load(r)
+  for entries in db:
+    if entries.get("metadata", {}).get("index") == index:
+      return f"{str(entries["metadata"]["index"])}<?>{str(entries["metadata"]["timestamp"])}<?>{entries["entry"]["hash"]}<?>{entries["entry"]["algo"]}<?>{entries["entry"]["source"]}<?>{entries["comments"]}"
 
 def verify():
   if not os.path.exists(config["directories"]["hashEntries"]):
