@@ -1,10 +1,8 @@
-from components.toolbox import byte, localsave, config
+from components.toolbox import byte, localsave
 from components.crypto import argon, aes, sign
 import plyvel, time, os, json, re
 from hashlib import sha256
 from pathlib import Path
-
-conf = config()
 
 class database:
   def __init__(self, password):
