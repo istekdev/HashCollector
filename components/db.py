@@ -1,5 +1,4 @@
 from components.toolbox import byte, localsave
-from components.crypto import argon, aes, sign
 import plyvel, time, os, json, re
 from hashlib import sha256
 from pathlib import Path
@@ -19,10 +18,10 @@ class database:
         counter += 1
 
     dat = plyvel.DB(localsave() / "bin" / "hashes" / f"{base64.b64encode(sha256(byte(hash)).digest()[:16]).decode()}_{str(counter + 1)}", create_if_missing=False)
-    dat.put(b"metadata:timestamp", enc.encrypt(byte(round(time.time()))))
-    dat.put(b"hashData:algo", enc.encrypt(byte(hashingAlgo)))
-    dat.put(b"hashData:source", enc.encrypt(byte(source)))
-    dat.put(b"hashData:hash", enc.encrypt(byte(hash)))
+    dat.put(b"metadata:timestamp", byte(round(time.time())))
+    dat.put(b"hashData:algo", byte(hashingAlgo))
+    dat.put(b"hashData:source", byte(source))
+    dat.put(b"hashData:hash", byte(hash))
     dat.close()
     return True
 
@@ -36,4 +35,4 @@ class database:
       return False
 
     dat = plyvel.DB(localsave() / "bin" / "hashes" / filename, create_if_missing=False)
-    return bytearray(enc.decrypt(dat.get(b"metadata:timestamp"))), bytearray(enc.decrypt(dat.get(b"hashData:algo"))), bytearray(enc.decrypt(dat.get(b"hashData:source"))), bytearray(enc.decrypt(dat.get(b"hashData:hash")))
+    return bytearray(dat.get(b"metadata:timestamp")), bytearray(dat.get(b"hashData:algo")), bytearray(dat.get(b"hashData:source")), bytearray(dat.get(b"hashData:hash"))
