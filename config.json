@@ -4,17 +4,5 @@
     "developer": "ISTEK",
     "github": "https://github.com/istekdev/HashCollector",
     "created": 1771301579
-  },
-  "security": {
-    "lengths": {
-      "nonceSize": 12,
-      "saltSize": 16,
-      "keySize": 32
-    },
-    "argon": {
-      "time": 3,
-      "memory": 65536,
-      "parallelism": 4
-    }
   }
 }
